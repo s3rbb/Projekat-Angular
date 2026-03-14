@@ -1,0 +1,100 @@
+.filters {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+  align-items: flex-start;
+  margin-bottom: 20px;
+
+  mat-form-field {
+    flex: 1 1 160px;
+    min-width: 140px;
+  }
+
+  button {
+    margin-top: 8px;
+  }
+}
+
+.toy-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
+  gap: 16px;
+}
+
+.toy-card {
+  display: flex;
+  flex-direction: column;
+  background: #1e1e1e;
+  border: 1px solid #333;
+  border-radius: 8px;
+
+  img {
+    height: 180px;
+    object-fit: cover;
+    border-radius: 8px 8px 0 0;
+  }
+
+  mat-card-content {
+    flex: 1;
+  }
+
+  .description {
+    font-size: 0.85rem;
+    color: #999;
+    margin: 6px 0;
+    line-height: 1.4;
+  }
+
+  .details {
+    display: flex;
+    flex-direction: column;
+    gap: 2px;
+    font-size: 0.8rem;
+    color: #888;
+    margin-bottom: 6px;
+  }
+
+  .price {
+    font-size: 1.1rem;
+    font-weight: 500;
+    color: hwb(128 31% 30%);
+    margin: 6px 0 4px;
+  }
+
+  .rating {
+    display: flex;
+    align-items: center;
+    gap: 4px;
+    font-size: 0.85rem;
+    margin-top: 4px;
+    color: #b0b0b0;
+
+    .stars {
+      display: inline-flex;
+      gap: 1px;
+    }
+
+    .star {
+      font-size: 18px;
+      height: 18px;
+      width: 18px;
+      color: #666;
+
+      &.filled {
+        color: #ffc107;
+      }
+    }
+  }
+
+  mat-card-actions {
+    display: flex;
+    justify-content: flex-end;
+  }
+}
+
+.no-results {
+  text-align: center;
+  padding: 32px;
+  color: #888;
+  font-size: 1rem;
+}

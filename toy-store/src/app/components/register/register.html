@@ -1,0 +1,71 @@
+<div class="form-container">
+  <mat-card>
+    <mat-card-header>
+      <mat-card-title>Registracija</mat-card-title>
+    </mat-card-header>
+    <mat-card-content>
+      <form (ngSubmit)="register()">
+        <mat-form-field appearance="outline">
+          <mat-label>Ime</mat-label>
+          <input matInput [(ngModel)]="user.firstName" name="firstName" required>
+        </mat-form-field>
+
+        <mat-form-field appearance="outline">
+          <mat-label>Prezime</mat-label>
+          <input matInput [(ngModel)]="user.lastName" name="lastName" required>
+        </mat-form-field>
+
+        <mat-form-field appearance="outline">
+          <mat-label>Email</mat-label>
+          <input matInput type="email" [(ngModel)]="user.email" name="email" required (blur)="validateEmail()">
+          @if (!emailValid) {
+            <mat-error>Unesite ispravan email (npr. ime&#64;domen.com)</mat-error>
+          }
+        </mat-form-field>
+
+        <mat-form-field appearance="outline">
+          <mat-label>Telefon</mat-label>
+          <input matInput [(ngModel)]="user.phone" name="phone" required (blur)="validatePhone()">
+          @if (!phoneValid) {
+            <mat-error>Unesite ispravan broj telefona (npr. +381 64 1234567)</mat-error>
+          }
+        </mat-form-field>
+
+        <mat-form-field appearance="outline">
+          <mat-label>Adresa</mat-label>
+          <input matInput [(ngModel)]="user.address" name="address" required>
+        </mat-form-field>
+
+        <mat-form-field appearance="outline">
+          <mat-label>Omiljene vrste igracaka</mat-label>
+          <mat-select [(ngModel)]="user.favoriteToyTypes" name="favoriteToyTypes" multiple>
+            @for (type of toyTypes; track type.typeId) {
+              <mat-option [value]="type.name">{{ type.name }}</mat-option>
+            }
+          </mat-select>
+        </mat-form-field>
+
+        <mat-form-field appearance="outline">
+          <mat-label>Korisnicko ime</mat-label>
+          <input matInput [(ngModel)]="user.username" name="username" required>
+        </mat-form-field>
+
+        <mat-form-field appearance="outline">
+          <mat-label>Lozinka</mat-label>
+          <input matInput type="password" [(ngModel)]="user.password" name="password" required (blur)="validatePassword()">
+          @if (!passwordValid) {
+            <mat-error>Lozinka mora imati najmanje 4 karaktera</mat-error>
+          }
+        </mat-form-field>
+
+        <button mat-raised-button color="primary" type="submit"
+          [disabled]="!formValid">
+          <mat-icon>person_add</mat-icon> Registruj se
+        </button>
+      </form>
+    </mat-card-content>
+    <mat-card-actions>
+      <p>Vec imate nalog? <a routerLink="/login">Prijavite se</a></p>
+    </mat-card-actions>
+  </mat-card>
+</div>

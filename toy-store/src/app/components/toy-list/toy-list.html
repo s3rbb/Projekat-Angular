@@ -1,0 +1,95 @@
+<h2>Igračke</h2>
+
+<div class="filters">
+  <mat-form-field appearance="outline">
+    <mat-label>Naziv</mat-label>
+    <input matInput [(ngModel)]="searchName" (ngModelChange)="applyFilters()" placeholder="Unesite naziv...">
+    <mat-icon matSuffix>search</mat-icon>
+  </mat-form-field>
+
+  <mat-form-field appearance="outline">
+    <mat-label>Tip</mat-label>
+    <mat-select [(ngModel)]="selectedType" (ngModelChange)="applyFilters()">
+      <mat-option value="">Svi tipovi</mat-option>
+      @for (type of types; track type.typeId) {
+        <mat-option [value]="type.name">{{ type.name }}</mat-option>
+      }
+    </mat-select>
+  </mat-form-field>
+
+  <mat-form-field appearance="outline">
+    <mat-label>Uzrast</mat-label>
+    <mat-select [(ngModel)]="selectedAgeGroup" (ngModelChange)="applyFilters()">
+      <mat-option value="">Svi uzrasti</mat-option>
+      @for (group of ageGroups; track group.ageGroupId) {
+        <mat-option [value]="group.name">{{ group.name }}</mat-option>
+      }
+    </mat-select>
+  </mat-form-field>
+
+  <mat-form-field appearance="outline">
+    <mat-label>Ciljna grupa</mat-label>
+    <mat-select [(ngModel)]="selectedTargetGroup" (ngModelChange)="applyFilters()">
+      <mat-option value="">Sve grupe</mat-option>
+      <mat-option value="svi">Svi</mat-option>
+      <mat-option value="dečak">Decak</mat-option>
+      <mat-option value="devojčica">Devojcica</mat-option>
+    </mat-select>
+  </mat-form-field>
+
+  <mat-form-field appearance="outline">
+    <mat-label>Min cena (RSD)</mat-label>
+    <input matInput type="number" [(ngModel)]="minPrice" (ngModelChange)="applyFilters()">
+  </mat-form-field>
+
+  <mat-form-field appearance="outline">
+    <mat-label>Max cena (RSD)</mat-label>
+    <input matInput type="number" [(ngModel)]="maxPrice" (ngModelChange)="applyFilters()">
+  </mat-form-field>
+
+  <button mat-stroked-button (click)="resetFilters()">
+    <mat-icon>clear</mat-icon> Resetuj filtere
+  </button>
+</div>
+
+<div class="toy-grid">
+  @for (toy of filteredToys; track toy.toyId) {
+    <mat-card class="toy-card">
+      <img mat-card-image [src]="getImageUrl(toy)" [alt]="toy.name">
+      <mat-card-header>
+        <mat-card-title>{{ toy.name }}</mat-card-title>
+        <mat-card-subtitle>{{ toy.type.name }} · Uzrast: {{ toy.ageGroup.name }} god.</mat-card-subtitle>
+      </mat-card-header>
+      <mat-card-content>
+        <p class="description">{{ toy.description }}</p>
+        <div class="details">
+          <span><strong>Ciljna grupa:</strong> {{ toy.targetGroup }}</span>
+          <span><strong>Datum proizvodnje:</strong> {{ toy.productionDate }}</span>
+        </div>
+        <p class="price">{{ toy.price }} RSD</p>
+        @if (getRating(toy.toyId)) {
+          <div class="rating">
+            <strong>Ocena:</strong>
+            <span class="stars">
+              @for (filled of getStars(getRating(toy.toyId)); track $index) {
+                <mat-icon class="star" [class.filled]="filled">
+                  {{ filled ? 'star' : 'star_border' }}
+                </mat-icon>
+              }
+            </span>
+          </div>
+        }
+      </mat-card-content>
+      <mat-card-actions>
+        <button mat-raised-button color="primary" (click)="reserve(toy)" [disabled]="isInCart(toy.toyId)">
+          <mat-icon>add_shopping_cart</mat-icon>
+          {{ isInCart(toy.toyId) ? 'U korpi' : 'Rezerviši' }}
+        </button>
+      </mat-card-actions>
+    </mat-card>
+  }
+</div>
+
+@if (filteredToys.length === 0) {
+  <p class="no-results">Nema igracaka koje odgovaraju zadatim kriterijumima.</p>
+}

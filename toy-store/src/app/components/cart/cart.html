@@ -1,0 +1,93 @@
+<h2>Korpa rezervacija</h2>
+
+@if (dataSource.length === 0) {
+  <div class="empty-cart">
+    <mat-icon>remove_shopping_cart</mat-icon>
+    <p>Vasa korpa je prazna.</p>
+  </div>
+} @else {
+  <div class="table-container">
+    <table mat-table [dataSource]="dataSource">
+
+      <ng-container matColumnDef="image">
+        <th mat-header-cell *matHeaderCellDef>Slika</th>
+        <td mat-cell *matCellDef="let item">
+          <img [src]="getImageUrl(item)" [alt]="item.name" class="cart-img">
+        </td>
+      </ng-container>
+
+      <ng-container matColumnDef="name">
+        <th mat-header-cell *matHeaderCellDef>Naziv</th>
+        <td mat-cell *matCellDef="let item">{{ item.name }}</td>
+      </ng-container>
+
+      <ng-container matColumnDef="type">
+        <th mat-header-cell *matHeaderCellDef>Tip</th>
+        <td mat-cell *matCellDef="let item">{{ item.type.name }}</td>
+      </ng-container>
+
+      <ng-container matColumnDef="ageGroup">
+        <th mat-header-cell *matHeaderCellDef>Uzrast</th>
+        <td mat-cell *matCellDef="let item">{{ item.ageGroup.name }}</td>
+      </ng-container>
+
+      <ng-container matColumnDef="price">
+        <th mat-header-cell *matHeaderCellDef>Cena</th>
+        <td mat-cell *matCellDef="let item">{{ item.price }} RSD</td>
+      </ng-container>
+
+      <ng-container matColumnDef="status">
+        <th mat-header-cell *matHeaderCellDef>Status</th>
+        <td mat-cell *matCellDef="let item">
+          <mat-form-field appearance="outline" class="status-field">
+            <mat-select [value]="item.status" (selectionChange)="changeStatus(item, $event.value)">
+              <mat-option value="rezervisano">Rezervisano</mat-option>
+              <mat-option value="pristiglo">Pristiglo</mat-option>
+              <mat-option value="otkazano">Otkazano</mat-option>
+            </mat-select>
+          </mat-form-field>
+        </td>
+      </ng-container>
+
+      <ng-container matColumnDef="rating">
+        <th mat-header-cell *matHeaderCellDef>Ocena</th>
+        <td mat-cell *matCellDef="let item">
+          @if (item.status === 'pristiglo') {
+            <div class="stars">
+              @for (filled of getStars(item.rating); track $index) {
+                <mat-icon
+                  class="star"
+                  [class.filled]="filled"
+                  (click)="rate(item, $index + 1)">
+                  {{ filled ? 'star' : 'star_border' }}
+                </mat-icon>
+              }
+            </div>
+          } @else {
+            <span class="no-rating">—</span>
+          }
+        </td>
+      </ng-container>
+
+      <ng-container matColumnDef="actions">
+        <th mat-header-cell *matHeaderCellDef>Akcije</th>
+        <td mat-cell *matCellDef="let item">
+          @if (item.status === 'pristiglo') {
+            <button mat-icon-button color="warn" (click)="remove(item)">
+              <mat-icon>delete</mat-icon>
+            </button>
+          } @else {
+            <span class="no-rating">—</span>
+          }
+        </td>
+      </ng-container>
+
+      <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+      <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+    </table>
+  </div>
+
+  <div class="total">
+    <strong>Ukupno: {{ cartService.getTotal() }} RSD</strong>
+  </div>
+}

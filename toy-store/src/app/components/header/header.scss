@@ -1,0 +1,41 @@
+:host {
+  display: block;
+}
+
+.app-title {
+  cursor: pointer;
+  font-weight: 500;
+  font-size: 1.1rem;
+}
+
+.spacer {
+  flex: 1 1 auto;
+}
+
+.active-link {
+  background-color: rgba(255, 255, 255, 0.1);
+}
+
+mat-toolbar {
+  position: sticky;
+  top: 0;
+  z-index: 1000;
+  background: #1e1e1e;
+  color: #e0e0e0;
+  border-bottom: 1px solid #333;
+}
+
+a[mat-button], button[mat-button] {
+  color: #b0b0b0;
+
+  &:hover {
+    color: #fff;
+  }
+
+  mat-icon {
+    margin-right: 4px;
+    font-size: 20px;
+    height: 20px;
+    width: 20px;
+  }
+}

@@ -1,0 +1,50 @@
+<div class="form-container">
+  <mat-card>
+    <mat-card-header>
+      <mat-card-title>Moj profil</mat-card-title>
+    </mat-card-header>
+    <mat-card-content>
+      @if (user) {
+        <form (ngSubmit)="save()">
+          <mat-form-field appearance="outline">
+            <mat-label>Ime</mat-label>
+            <input matInput [(ngModel)]="user.firstName" name="firstName" required>
+          </mat-form-field>
+
+          <mat-form-field appearance="outline">
+            <mat-label>Prezime</mat-label>
+            <input matInput [(ngModel)]="user.lastName" name="lastName" required>
+          </mat-form-field>
+
+          <mat-form-field appearance="outline">
+            <mat-label>Email</mat-label>
+            <input matInput type="email" [(ngModel)]="user.email" name="email" required>
+          </mat-form-field>
+
+          <mat-form-field appearance="outline">
+            <mat-label>Telefon</mat-label>
+            <input matInput [(ngModel)]="user.phone" name="phone">
+          </mat-form-field>
+
+          <mat-form-field appearance="outline">
+            <mat-label>Adresa</mat-label>
+            <input matInput [(ngModel)]="user.address" name="address">
+          </mat-form-field>
+
+          <mat-form-field appearance="outline">
+            <mat-label>Omiljene vrste igračaka</mat-label>
+            <mat-select [(ngModel)]="user.favoriteToyTypes" name="favoriteToyTypes" multiple>
+              @for (type of toyTypes; track type.typeId) {
+                <mat-option [value]="type.name">{{ type.name }}</mat-option>
+              }
+            </mat-select>
+          </mat-form-field>
+
+          <button mat-raised-button color="primary" type="submit">
+            <mat-icon>save</mat-icon> Sačuvaj izmene
+          </button>
+        </form>
+      }
+    </mat-card-content>
+  </mat-card>
+</div>
