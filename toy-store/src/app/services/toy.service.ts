@@ -5,7 +5,7 @@ import { Toy, AgeGroup, ToyType } from '../models/toy';
 
 @Injectable({ providedIn: 'root' })
 export class ToyService {
-  private readonly baseUrl = 'https://toy.pequla.com/api';           // dat api, ne diraj.
+  private readonly baseUrl = 'https://toy.pequla.com/api';          
 
   constructor(private http: HttpClient) {}
 

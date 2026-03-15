@@ -50,13 +50,13 @@ export class CartComponent {
   remove(item: CartItem): void {
     this.cartService.removeFromCart(item.toyId);
     this.refreshData();
-    this.snackBar.open('Igra\u010dka je uklonjena iz korpe.', 'OK', { duration: 2000 });
+    this.snackBar.open('Igracka je uklonjena iz korpe.', 'OK', { duration: 2000 });
   }
 
   rate(item: CartItem, rating: number): void {
     this.cartService.rateToy(item.toyId, rating);
     this.refreshData();
-    this.snackBar.open(`Ocena ${rating} je sa\u010duvana.`, 'OK', { duration: 2000 });
+    this.snackBar.open(`Ocena ${rating} je sacuvana.`, 'OK', { duration: 2000 });
   }
 
   getStars(rating: number | undefined): boolean[] {
